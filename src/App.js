@@ -59,6 +59,8 @@ function App() {
       response.json()).then(data => 
       {
         setCountryInfo(data);
+        setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+        setMapZoom(5);
       });
 
     };
