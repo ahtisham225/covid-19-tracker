@@ -1,10 +1,30 @@
 // import logo from './logo.svg';
-import React,  {useState} from 'react';
+import React,  {useEffect, useState} from 'react';
 import './App.css';
 import { MenuItem, FormControl, Select } from "@mui/material";
 function App() {
 
-  const [countries, setCountries] = useState(['Pakistan', 'USA']);
+  const [countries, setCountries] = useState([]);
+  useEffect(() => {
+    const getCountriesData = async () => {
+      await fetch("https://disease.sh/v3/covid-19/countries")
+      .then((response) => response.json())
+      .then((data) =>{
+        const countries = data.map((country) => (
+          {
+            name: country.country, // Pakistan, United States
+            value: country.countryInfo.iso2 // PK, USA
+          }
+        ));
+        setCountries(countries);
+      });
+    };
+    getCountriesData();
+  }, []);
+      
+
+
+
   return (
     <div className="app">
       
@@ -17,7 +37,7 @@ function App() {
           {/* Loop through all the countries and show a drop down list of the options */}
           {
             countries.map((country) => (
-              <MenuItem value={country}>{country}</MenuItem>
+              <MenuItem value={country.value}>{country.name}</MenuItem>
             ))
           }
         </Select>  
