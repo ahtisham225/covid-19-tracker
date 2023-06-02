@@ -17,7 +17,7 @@ function Map({countries,casesType, center, zoom}) {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attributes='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
                 />
-                {showDataOnMap(countries, "cases")}
+                {showDataOnMap(countries, casesType)}
             </MapContainer>
         </div>
     )

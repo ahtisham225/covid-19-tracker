@@ -21,6 +21,9 @@ function App() {
   );
   const [mapZoom, setMapZoom] = useState(3);
   const [mapCountries, setMapCountries] = useState([]);  
+  const [casesType, setCasesType] = useState("cases");
+  
+  
   useEffect(() => {
     const getCountriesData = async () => {
       await fetch("https://disease.sh/v3/covid-19/countries")
@@ -77,10 +80,10 @@ function App() {
         <FormControl className="app__dropdown">
           <Select variant="outlined" onChange ={onCountryChage} value={country}>
             {/* Loop through all the countries and show a drop down list of the options */}
-            <MenuItem value="worldwide">Worldwide</MenuItem>
+            <MenuItem className='dropdown__values' value="worldwide">Worldwide</MenuItem>
             {
               countries.map((country) => (
-                <MenuItem value={country.value}>{country.name}</MenuItem>
+                <MenuItem className='dropdown__values' value={country.value}>{country.name}</MenuItem>
               ))
             }
           </Select>  
@@ -91,15 +94,25 @@ function App() {
 
         {/* InfoBox */}
         <div className="app__stats">
-          <InfoBox title="Coronavirus Cases" cases={countryInfo.todayCases} total={countryInfo.cases}/>
-          <InfoBox title="Recovered" cases={countryInfo.todayRecovered} total={countryInfo.recovered}/>
-          <InfoBox title="Deaths" cases={countryInfo.todayDeaths} total={countryInfo.deaths}/>
+          <InfoBox 
+          active={casesType === "cases"}
+          onClick={(e) => setCasesType("cases")}
+          title="Coronavirus Cases" cases={countryInfo.todayCases} total={countryInfo.cases}/>
+          <InfoBox 
+          active={casesType === "recovered"}
+          isRecovered = {true}
+          onClick={(e) => setCasesType("recovered")}
+          title="Recovered" cases={countryInfo.todayRecovered} total={countryInfo.recovered}/>
+          <InfoBox 
+          active={casesType === "deaths"}  
+          onClick={(e) => setCasesType("deaths")}
+          title="Deaths" cases={countryInfo.todayDeaths} total={countryInfo.deaths}/>
         </div>
         
         {/* Map */}
         <Map
         countries={mapCountries}
-        casesType='cases'
+        casesType={casesType}
         center={mapCenter}
         zoom = {mapZoom}
         />
@@ -109,9 +122,10 @@ function App() {
         <CardContent>
           <h3>All Cases by Country</h3>
           <Table countries={tableData}/>
-          <h3>Worldwide new cases</h3>
+          <h3 className='new__cases'>Worldwide new {casesType}</h3>
+          <LineGraph
+          casesType={casesType}/>
         </CardContent>
-        <LineGraph/>
         {/* Graph */}
       </Card>
     </div>

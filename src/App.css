@@ -19,7 +19,18 @@ body {
   align-items:center;
   margin-bottom: 20px;
 }
+.app__header > h1 {
+  color : rgb(154, 204, 220);
+  font-size: 2rem;
+}
+h3 {
+    color : rgb(154, 204, 220);
+}
 
+.new__cases {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 .app__stats {
   display: flex;
   justify-content: space-between;
