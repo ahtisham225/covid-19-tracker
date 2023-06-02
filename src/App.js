@@ -1,14 +1,17 @@
 // import logo from './logo.svg';
 import React,  {useEffect, useState} from 'react';
 import './App.css';
-import { MenuItem, FormControl, Select,Card, CardContent } from "@mui/material";
+import { MenuItem, FormControl, Select,Card, CardContent} from "@mui/material";
 import InfoBox from './InfoBox';
 import Map from './Map';
+import Table from './Table';
+import { sortData } from './util';
 function App() {
 
   const [countries, setCountries] = useState([]);
   const [country,setCountry] = useState(['worldwide']);
   const [countryInfo, setCountryInfo] = useState({});
+  const [tableData, setTableData] = useState([]);
   useEffect(() => {
     const getCountriesData = async () => {
       await fetch("https://disease.sh/v3/covid-19/countries")
@@ -20,10 +23,13 @@ function App() {
             value: country.countryInfo.iso2 // PK, USA
           }
         ));
+        const sortedData = sortData(data);
+        setTableData(sortedData);
         setCountries(countries);
       });
     };
     getCountriesData();
+
   }, []);
       
 
@@ -84,7 +90,8 @@ function App() {
       <Card className="app__right">
         {/* Table */}
         <CardContent>
-          <h3>Live Cases by Country</h3>
+          <h3>All Cases by Country</h3>
+          <Table countries={tableData}/>
           <h3>Worldwide new cases</h3>
         </CardContent>
         {/* Graph */}
