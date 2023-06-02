@@ -20,6 +20,7 @@ function App() {
     }
   );
   const [mapZoom, setMapZoom] = useState(3);
+  const [mapCountries, setMapCountries] = useState([]);  
   useEffect(() => {
     const getCountriesData = async () => {
       await fetch("https://disease.sh/v3/covid-19/countries")
@@ -33,6 +34,7 @@ function App() {
         ));
         const sortedData = sortData(data);
         setTableData(sortedData);
+        setMapCountries(data);
         setCountries(countries);
       });
     };
@@ -96,6 +98,8 @@ function App() {
         
         {/* Map */}
         <Map
+        countries={mapCountries}
+        casesType='cases'
         center={mapCenter}
         zoom = {mapZoom}
         />

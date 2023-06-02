@@ -11,3 +11,29 @@
 .map .leaflet-container {
     height: 100%;
 }
+.info-container {
+    width: 150px;
+    text-align: center;
+}
+.info-flag {
+    height: 100px;
+    width: 100%;
+    background-size: cover;
+    border-radius: 8px;
+}
+.info-name{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.info-cases {
+    display: flex;
+    justify-content: space-between;
+}
+.info-recovered {
+    display: flex;
+    justify-content: space-between;
+}
+.info-deaths {
+    display: flex;
+    justify-content: space-between;
+}   
