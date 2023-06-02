@@ -5,6 +5,7 @@ import { MenuItem, FormControl, Select } from "@mui/material";
 function App() {
 
   const [countries, setCountries] = useState([]);
+  const [country,setCountry] = useState(['worldwide']);
   useEffect(() => {
     const getCountriesData = async () => {
       await fetch("https://disease.sh/v3/covid-19/countries")
@@ -24,6 +25,10 @@ function App() {
       
 
 
+  const onCountryChage = async (event) => {
+    const countryCode = event.target.value;
+    setCountry(countryCode);
+  }
 
   return (
     <div className="app">
@@ -33,8 +38,9 @@ function App() {
       <div className="app__header">
       <h1>Covid 19 Tracker</h1>
       <FormControl className="app__dropdown">
-        <Select variant="outlined" value="abc">
+        <Select variant="outlined" onChange ={onCountryChage} value={country}>
           {/* Loop through all the countries and show a drop down list of the options */}
+          <MenuItem value="worldwide">Worldwide</MenuItem>
           {
             countries.map((country) => (
               <MenuItem value={country.value}>{country.name}</MenuItem>
